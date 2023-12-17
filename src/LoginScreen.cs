@@ -77,8 +77,8 @@ public class LoginScreen : Screen {
                 password = GetUserInput();
                 if (CompareToRootInfo(password, false))
                 {
-                    break;
                     UI.callMainScreen();
+                    break;
                 }
 
             }

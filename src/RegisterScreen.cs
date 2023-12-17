@@ -14,9 +14,8 @@ public class RegisterScreen : Screen {
     /// </summary>
     public void CreateUser(string password, string login) 
     {
-        int index = AccInfo.LoginBase.Count;
-        AccInfo.LoginBase[index + 1] = login;
-        AccInfo.PasswordBase[index + 1] = password;
+        AccInfo.LoginBase.Add(login);
+        AccInfo.PasswordBase.Add(password);
     }
 
     public override void Display()

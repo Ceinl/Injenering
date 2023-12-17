@@ -6,16 +6,43 @@ using System.Text;
 
 public class ActionItem {
 
-    public ActionItem() {
-    }
-
     public dynamic myAction;
 
-    /// <summary>
-    /// @return
-    /// </summary>
+    private string myActionType;  
+    
+    public string myActionName;  
+
+    public ActionItem(dynamic myAction) 
+    {
+        CreateAction(myAction);
+    }
+
+    public void CreateAction(ActionClicker newAction) 
+    {
+        myAction = newAction;
+    }
+
+    public void CreateAction(ActionWriter newAction)
+    {
+        myAction = newAction;
+    }
+
+    public void CreateAction(ActionNavigator newAction)
+    {
+        myAction = newAction;
+    }
+
+    public void CreateAction(ActionLooper newAction)
+    {
+        myAction = newAction;
+    }
+
+
+
+
+
     public void RunAction() {
-        // TODO implement here
+
     }
 
 }
