@@ -9,7 +9,7 @@ public class MainScreen : Screen {
     public MainScreen() {
     }
 
-    public List<ActionItem> ActionQueue;
+    public List<ActionItem> ActionQueue = new List<ActionItem>();
 
     public string excelPath;
 
@@ -27,6 +27,15 @@ public class MainScreen : Screen {
         }
     }
 
+    private string ConfingDisplay(string ToDisplay) 
+    {
+        DisplayTop("");
+        DisplayMid(ToDisplay);
+        DisplayDown("");
+
+        return GetUserInput();
+    }
+
     /// <summary>
     /// @return
     /// </summary>
@@ -39,81 +48,148 @@ public class MainScreen : Screen {
     /// </summary>
     public void AddAction()
     {
-        ActionQueue.Add(new ActionItem("123") { });
+
+        //ActionQueue.Add(new ActionItem("123") { });
+        DisplayTop("");
+        DisplayMid("List:\n(1) - Write\n(2) - click\n(3) - navigate\n(4) - loop)");
+        DisplayDown("");
+
+        int.TryParse(Console.ReadLine(), out int option);
+
+        if (option == 1)
+        {
+            //  заповнення данних в райтер
+
+            ActionWriter actionWriter = new ActionWriter();
+            string myelementName = ConfingDisplay("Element name:");
+            string myelementType = ConfingDisplay("Element type:");
+            string texttowrite  = ConfingDisplay("Input text:");
+
+            actionWriter.ActionConfigurator(ActionQueue.Count + 1, myelementName, myelementType, texttowrite);
+            ActionItem item = new ActionItem();
+            item.CreateAction(actionWriter);
+            ActionQueue.Add(item);
+        }
+        else if (option == 2)
+        {
+            ActionClicker actionClicker = new ActionClicker();
+            string myelementName = ConfingDisplay("Element name:");
+            string myelementType = ConfingDisplay("Element type:");
+
+            actionClicker.ActionConfigurator(ActionQueue.Count+1, myelementName,myelementType,null);
+            ActionItem item = new ActionItem();
+            item.CreateAction(actionClicker);
+            ActionQueue.Add(item);
+            
+        }
+        else if (option == 3)
+        {
+           ActionNavigator actionNavigator = new ActionNavigator();
+            string Url = ConfingDisplay("Input url:");
+
+            actionNavigator.ActionConfigurator(ActionQueue.Count + 1, Url,null,null);
+            ActionItem item = new ActionItem();
+            item.CreateAction(actionNavigator);
+            ActionQueue.Add(item);
+
+        }
+        else if(option == 4)
+        {
+            ActionLooper actionLooper = new ActionLooper();
+            string Positionstart = ConfingDisplay("Loop Start:");
+            string PositionEnd = ConfingDisplay("Loop End:");
+            string LoopCount = ConfingDisplay("Loop quantity:");
+
+            actionLooper.ActionConfigurator(ActionQueue.Count + 1, Positionstart, PositionEnd,LoopCount);
+            ActionItem item = new ActionItem();
+            item.CreateAction(actionLooper);
+            ActionQueue.Add(item);
+        }
+        else 
+        {
+            DisplayTop("");
+            DisplayMid("error");
+            DisplayDown("");
+        }
+        
+
+
     }
     /// <summary>
     /// @return
     /// </summary>
     public void RemoveAction()
     {
-
+        string toRemove = ConfingDisplay("Type id of element to delete");
+        int id;
+        if (int.TryParse(toRemove, out id)) 
+        {
+            ActionQueue.RemoveAt(id);
+        }
     }
 
 
 
-
-    public override void Display()
+    /*
+     
+    Додати дію
+    Забрати дію
+    Висвітити список
+    Параметри
+    Виконати чергу
+     
+     */
+    public override void Display() 
     {
         bool loop = true;
-        int choice = 0;
-        while (loop == true) 
+        int choice;
+        while (loop == true)
         {
-            // Run Add Remove End
-            // Add - clicker, writer, looper, navigator
-            // Remove - by ActionQueue id
-            DisplayTop("Choice action:");
-            DisplayMid("List:\n(1)Run actions\n(2)Display actions\n(3)Add action to queue\n(4)Remove action from queue\n(5)Parametrs");
+            DisplayTop("");
+            DisplayMid("List:\n(1) - Add action\n(2) - Remove action\n(3)List a actions\n(4) - Params\n(0) - Run queue");
             DisplayDown("");
+
             int.TryParse(GetUserInput(), out choice);
 
-            ClearScren();
-
-            if (choice == 1) 
-            {
-            
-            }
-            else if (choice == 2) 
-            { 
-            
-            }
-            else if (choice == 3)
+            if (choice == 1)
             {
                 AddAction();
             }
-            else if (choice == 4)
+            else if (choice == 2)
             {
                 RemoveAction();
             }
-            else if (choice == 5)
+            else if (choice == 3) 
+            {
+                for (int i = 0; i < ActionQueue.Count;i++) 
+                {
+                    ActionQueue[i].ActionDisplay();
+                }
+            }
+            else if (choice == 4)
             {
                 DisplayTop("");
-                DisplayMid("Choice param to change");
-                DisplayDown("List:(1)Path to excel file\n(2)Action deleay");
-
-                int.TryParse(GetUserInput(), out choice);
-
-                if (choice == 1)
-                {
-                    DisplayTop("");
-                    DisplayMid("Enter a excel file path:");
-                    DisplayDown("");
-
-                    GetExcel();
-                }
-                else if (choice == 2)
-                {
-                    DisplayTop("");
-                    DisplayMid("Enter a delay in miliseconds:");
-                    DisplayDown("");
-
-                    int.TryParse(GetUserInput(), out ActionDeley);
-                }
+                DisplayMid("");
+                DisplayDown("");
             }
-            else 
-            { 
-            
+            else if (choice == 0)
+            {
+                try
+                {
+                    for (int i = 0; i < ActionQueue.Count; i++)
+                    {
+                        ActionQueue[i].RunAction();
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Something went wrong");
+                }
+                
             }
-        }
+
+
+        }    
     }
 
 }

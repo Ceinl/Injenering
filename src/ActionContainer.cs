@@ -12,11 +12,13 @@ public abstract class ActionContainer {
     /// <summary>
     /// @return
     /// </summary>
-    public abstract void ActionConfigurator();
+    public abstract void ActionConfigurator(int a, string b, string c,string d);
 
     /// <summary>
     /// @return
     /// </summary>
     public abstract void ActionHolder();
+    public abstract void ActionResult();
+
 
 }

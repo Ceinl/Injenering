@@ -8,15 +8,25 @@ public class ActionClicker : ActionContainer {
 
     public ActionClicker() {
     }
+    int Order;
+    string ElementName;
+    string ElementType;
 
-    public override void ActionConfigurator()
+    public override void ActionConfigurator(int order, string elementname, string elementType, string b)
     {
-        throw new NotImplementedException();
+        Order = order;
+        ElementName = elementname;
+        ElementType = elementType;
     }
 
     public override void ActionHolder()
     {
-        throw new NotImplementedException();
+        BrowserManager.BrowserClicker(ElementName, ElementType);
+    }
+    public override void ActionResult()
+    {
+        Console.WriteLine($"{Order} -- Click on {ElementName}");
     }
 
 }
+

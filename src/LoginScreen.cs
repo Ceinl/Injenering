@@ -21,7 +21,7 @@ public class LoginScreen : Screen {
     /// <summary>
     /// @return
     /// </summary>
-    public bool CompareToRootInfo(string CompareData,bool isLogin) {
+    private bool CompareToRootInfo(string CompareData,bool isLogin) {
         if (isLogin) 
         {
             if (CompareData == rootLogin) 
@@ -39,6 +39,9 @@ public class LoginScreen : Screen {
         return false;
     }
 
+    /// <summary>
+    /// @return
+    /// </summary>
     public bool CompareToDataBaseInfo(string compareLogin, string comparePassword) {
         // TODO implement here
 
@@ -58,33 +61,45 @@ public class LoginScreen : Screen {
     {
         string password = "", login ="";
 
-
         while (true)
         {
-
             DisplayTop("");
-            DisplayMid("Login:");
+            DisplayMid("(1)Login\n\t(2)Register");
             DisplayDown("");
 
-            login = GetUserInput();
-            if (CompareToRootInfo(login, true))
-            {
+            int choice = 0;
 
-                DisplayTop($"login -- {login}");
-                DisplayMid("Password:");
+            int.TryParse(GetUserInput(), out choice);
+
+            if (choice == 1)
+            {
+                DisplayTop("");
+                DisplayMid("Login:");
                 DisplayDown("");
 
-                password = GetUserInput();
-                if (CompareToRootInfo(password, false))
+                login = GetUserInput();
+                if (CompareToRootInfo(login, true))
+                {
+
+                    DisplayTop($"login -- {login}");
+                    DisplayMid("Password:");
+                    DisplayDown("");
+
+                    password = GetUserInput();
+                    if (CompareToRootInfo(password, false))
+                    {
+                        UI.callMainScreen();
+                        break;
+                    }
+                }
+                else if (CompareToDataBaseInfo(login, password))
                 {
                     UI.callMainScreen();
-                    break;
                 }
-
             }
-            else if (CompareToDataBaseInfo(login, password))
+            else if (choice == 2)
             {
-                UI.callMainScreen();
+                UI.callRegisterScreen();
             }
         }
     }

@@ -6,17 +6,30 @@ using System.Text;
 
 public class ActionNavigator : ActionContainer {
 
+    private string Url;
+
+    private int Order;
+
     public ActionNavigator() {
     }
 
-    public override void ActionConfigurator()
+    public override void ActionConfigurator(int a, string url, string b, string c)
     {
-        throw new NotImplementedException();
-    }
+        Url = url;
+        Order = a;
+
+    }   
 
     public override void ActionHolder()
     {
-        throw new NotImplementedException();
+        int a;
+        BrowserManager.BrowserNavigator(Url);
+    }
+
+    public override void ActionResult()
+    {
+        Console.WriteLine($" {Order} -- Navigation");
+
     }
 
 }

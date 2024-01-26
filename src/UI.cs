@@ -15,27 +15,24 @@ public class UI {
     public static MainScreen mainScreen = new MainScreen();
 
     /// <summary>
-    /// Method to call a login screen from base file
+    /// Method to call a login screen 
     /// </summary>
     public static void callLoginScreen() {
-        // TODO implement here
         login.Display();
     }
 
     /// <summary>
-    /// @return
+    /// Method to call a register screen 
     /// </summary>
     public static void callRegisterScreen() {
-        // TODO implement here
         register.Display();
 
     }
 
     /// <summary>
-    /// @return
+    /// Method to call a main screen 
     /// </summary>
     public static void callMainScreen() {
-        // TODO implement here
         mainScreen.Display();
     }
 

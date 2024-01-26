@@ -8,16 +8,10 @@ public class ActionItem {
 
     public dynamic myAction;
 
-    private string myActionType;  
-    
-    public string myActionName;  
+    public string myActionName;
 
-    public ActionItem(dynamic myAction) 
-    {
-        CreateAction(myAction);
-    }
-
-    public void CreateAction(ActionClicker newAction) 
+   
+    public void CreateAction(ActionClicker newAction)
     {
         myAction = newAction;
     }
@@ -39,10 +33,13 @@ public class ActionItem {
 
 
 
-
+    public void ActionDisplay() 
+    {
+        myAction.ActionResult();
+    }
 
     public void RunAction() {
-
+        myAction.ActionHolder();
     }
 
 }
